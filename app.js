@@ -9,6 +9,7 @@ const searchSongs = () => {
 }
 const displaySongs = songs => {
     const songsContainer = document.getElementById('song-container');
+    songsContainer.innerHTML = '';
     songs.forEach(song => {
         const songDiv = document.createElement('div');
         songDiv.className = 'single-result row align-items-center my-3 p-3';
@@ -24,8 +25,8 @@ const displaySongs = songs => {
                         <button onclick="getLyrics('${song.artist.name}','${song.title}')" class="btn btn-success">Get Lyrics</button>
                     </div>
         `;
-
         songsContainer.appendChild(songDiv);
+
     });
 }
 
