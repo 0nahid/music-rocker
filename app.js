@@ -1,11 +1,13 @@
-const searchSongs = () => {
+const searchSongs = async () => {
     const searchText = document.getElementById('search-field').value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            displaySongs(data.data)
-        })
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displaySongs(data.data);
+    } catch (error) {
+        displayError();
+    }
 }
 const displaySongs = songs => {
     const songsContainer = document.getElementById('song-container');
@@ -30,13 +32,24 @@ const displaySongs = songs => {
     });
 }
 
-const getLyrics = (artist, title) => {
+const getLyrics = async (artist, title) => {
     const url = `https://api.lyrics.ovh/v1/${artist}/${title}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayLyrics(data.lyrics))
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayLyrics(data.lyrics);
+    } catch (error) {
+        displayError()
+    }
 }
 const displayLyrics = lyrics => {
     const lyricsDiv = document.getElementById('song-lyrics');
+    lyricsDiv.innerHTML = '';
     lyricsDiv.innerText = lyrics;
+}
+
+const displayError = error => {
+    const errorTag = document.getElementById('error-message');
+    errorTag.innerText = 'Sorry! we can\'t reach you. Please try Again Later';
+    return displayError(error);
 }
