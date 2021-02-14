@@ -1,3 +1,9 @@
+document.getElementById('search-field').addEventListener("keypress", function (event) {    
+    if (event.key == 'Enter') {
+        document.getElementById('search-button').click()
+    };
+});
+
 const searchSongs = async () => {
     const searchText = document.getElementById('search-field').value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
@@ -6,6 +12,11 @@ const searchSongs = async () => {
         const res = await fetch(url);
         const data = await res.json();
         displaySongs(data.data);
+        if (data.data === null) {
+            songDiv.innerHTML = `
+            <h1>Sorry no matching songs found! Try an international songs</h1>
+            `
+        }
     } catch (error) {
         displayError();
     }
