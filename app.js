@@ -1,6 +1,7 @@
 const searchSongs = async () => {
     const searchText = document.getElementById('search-field').value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
+    toggleSpinner();
     try {
         const res = await fetch(url);
         const data = await res.json();
@@ -28,7 +29,7 @@ const displaySongs = songs => {
                     </div>
         `;
         songsContainer.appendChild(songDiv);
-
+        toggleSpinner();
     });
 }
 
@@ -52,4 +53,9 @@ const displayError = error => {
     const errorTag = document.getElementById('error-message');
     errorTag.innerText = 'Sorry! we can\'t reach you. Please try Again Later';
     return displayError(error);
+}
+
+const toggleSpinner = () => {
+    const spinner = document.getElementById('loaderSpinner');
+    spinner.classList.toggle('d-none');
 }
