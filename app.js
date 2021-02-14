@@ -57,5 +57,7 @@ const displayError = error => {
 
 const toggleSpinner = () => {
     const spinner = document.getElementById('loaderSpinner');
+    const songs = document.getElementById('song-container');
+    songs.classList.toggle('d-none');
     spinner.classList.toggle('d-none');
 }
